@@ -16,211 +16,209 @@
 *{box-sizing:border-box}
 html,body{margin:0;height:100%;background:var(--charcoal);font-family:var(--body);color:var(--ink)}
 body{overflow:hidden}
-
-/* ---- stage keeps 16:9 ---- */
-#stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
-.deck{position:relative;width:1280px;height:720px;transform-origin:center center;background:var(--paper);box-shadow:0 30px 80px rgba(0,0,0,.45)}
-.slide{position:absolute;inset:0;padding:64px 80px 72px 80px;display:none;flex-direction:column;background:var(--paper)}
+#stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.photo img,.imgcard img,.logo,.portrait{max-width:none}
+.deck{position:relative;width:1280px!important;min-width:1280px!important;max-width:none!important;height:720px!important;min-height:720px!important;max-height:none!important;flex:0 0 auto;transform-origin:center center;background:var(--paper);box-shadow:0 30px 80px rgba(0,0,0,.45);overflow:hidden}
+.slide{position:absolute;inset:0;padding:60px 80px 70px;display:none;flex-direction:column;background:var(--paper)}
 .slide.active{display:flex;animation:fade .35s ease}
 @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
-/* ---- footer / chrome ---- */
-.chrome{position:absolute;left:80px;right:80px;bottom:26px;display:flex;justify-content:space-between;align-items:center;
-  font-family:var(--head);font-size:12px;letter-spacing:.6px;color:#8a8560;pointer-events:none}
+/* chrome */
+.chrome{position:absolute;left:80px;right:80px;bottom:24px;display:flex;justify-content:space-between;align-items:center;font-family:var(--head);font-size:12px;letter-spacing:.6px;color:#8a8560;pointer-events:none;z-index:5}
 .chrome .sec{text-transform:uppercase;letter-spacing:2px;font-size:11px}
-.progress{position:absolute;left:0;bottom:0;height:4px;background:var(--rust);transition:width .3s}
+.slide.bg ~ .chrome, .onbg .chrome{color:rgba(241,227,200,.7)}
+.progress{position:absolute;left:0;bottom:0;height:4px;background:var(--rust);transition:width .3s;z-index:5}
 .nav{position:fixed;right:22px;bottom:18px;display:flex;gap:8px;z-index:9}
-.nav button{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:var(--cream);width:40px;height:40px;border-radius:50%;
-  font-size:18px;cursor:pointer;font-family:var(--head)}
+.nav button{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:var(--cream);width:40px;height:40px;border-radius:50%;font-size:18px;cursor:pointer;font-family:var(--head)}
 .nav button:hover{background:rgba(255,255,255,.25)}
 .hint{position:fixed;left:22px;bottom:24px;color:rgba(241,227,200,.55);font-family:var(--head);font-size:11px;letter-spacing:1px;z-index:9}
 
-/* ---- typography ---- */
+/* type */
 .eyebrow{font-family:var(--head);font-size:12px;letter-spacing:3.5px;text-transform:uppercase;color:var(--rust);margin-bottom:14px}
-h1{font-family:var(--head);font-weight:500;font-size:64px;line-height:1.05;color:var(--charcoal);margin:0 0 18px}
-h2{font-family:var(--head);font-weight:500;font-size:40px;line-height:1.1;color:var(--charcoal);margin:0 0 10px}
-h3{font-family:var(--head);font-weight:700;font-size:16px;color:var(--rust);margin:0 0 6px;letter-spacing:.3px}
-.sub{font-family:var(--head);font-style:italic;font-size:20px;color:var(--olive);margin:0 0 26px;line-height:1.35}
-p{font-size:18px;line-height:1.5;margin:0 0 12px}
-.lead{font-size:22px;color:var(--charcoal);line-height:1.45}
-strong{color:var(--charcoal)}
-em{color:var(--olive-gray)}
-ul{margin:0;padding-left:22px}
-li{margin-bottom:8px;font-size:17px;line-height:1.45}
-li::marker{color:var(--rust)}
+h1{font-family:var(--head);font-weight:500;font-size:66px;line-height:1.04;color:var(--charcoal);margin:0 0 18px}
+h2{font-family:var(--head);font-weight:500;font-size:44px;line-height:1.08;color:var(--charcoal);margin:0 0 12px}
+h3{font-family:var(--head);font-weight:700;font-size:16px;color:var(--rust);margin:0 0 6px}
+.sub{font-family:var(--head);font-style:italic;font-size:21px;color:var(--olive);margin:0 0 24px;line-height:1.35}
+p{font-size:19px;line-height:1.5;margin:0 0 12px}
+.lead{font-size:24px;color:var(--charcoal);line-height:1.4}
+strong{color:var(--charcoal)} em{color:var(--olive-gray)}
+ul{margin:0;padding-left:22px} li{margin-bottom:9px;font-size:18px;line-height:1.4} li::marker{color:var(--rust)}
 .small{font-size:14px;color:var(--olive-gray)}
-a{color:var(--rust);text-decoration:none;border-bottom:1px solid rgba(170,61,29,.35)}
-a:hover{border-bottom-color:var(--rust)}
+a{color:var(--rust);text-decoration:none}
 
-/* ---- layout helpers ---- */
-.row{display:flex;gap:28px;flex:1;min-height:0}
+/* layout */
+.row{display:flex;gap:30px;flex:1;min-height:0}
 .col{flex:1;min-width:0}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px;flex:1}
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;flex:1}
-.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;flex:1}
-.grow{flex:1}
-.mt{margin-top:auto}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px;flex:1;min-height:0}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;flex:1;min-height:0}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;flex:1;min-height:0}
+.grid5{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;flex:1;min-height:0}
+.center{align-items:center;justify-content:center;text-align:center}
 
-/* ---- components ---- */
-.callout{background:var(--box);border-left:5px solid var(--rust);padding:22px 28px}
-.callout .label{display:block;font-family:var(--head);font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--rust);margin-bottom:8px}
-.callout .big{font-family:var(--head);font-style:italic;font-size:26px;line-height:1.35;color:var(--charcoal);margin:0}
-.dark{background:var(--charcoal);color:var(--cream);padding:22px 28px}
-.dark .label{display:block;font-family:var(--head);font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
-.dark p{color:var(--cream)} .dark strong{color:#f0d9c7} .dark h3{color:var(--gold)}
-.card{background:#fff;border:1px solid var(--line);padding:20px 22px;display:flex;flex-direction:column}
-.card h3{font-size:18px;color:var(--charcoal);font-weight:500;margin-bottom:6px}
-.card .tag{font-family:var(--head);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--rust);margin-bottom:6px}
-.card p,.card li{font-size:15px;line-height:1.45}
+/* components */
+.callout{background:var(--box);border-left:5px solid var(--rust);padding:24px 30px}
+.callout .label,.dark .label{display:block;font-family:var(--head);font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--rust);margin-bottom:8px}
+.callout .big{font-family:var(--head);font-style:italic;font-size:27px;line-height:1.35;color:var(--charcoal);margin:0}
+.dark{background:var(--charcoal);color:var(--cream);padding:24px 30px}
+.dark .label{color:var(--gold)} .dark p{color:var(--cream)} .dark strong{color:#f0d9c7}
+.card{background:#fff;border:1px solid var(--line);padding:22px 24px;display:flex;flex-direction:column}
+.card h3{font-size:20px;color:var(--charcoal);font-weight:500;margin-bottom:6px}
+.card .tag{font-family:var(--head);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--rust);margin-bottom:8px}
+.card p,.card li{font-size:16px;line-height:1.45}
 .card.tint{background:var(--box)}
-.num{font-family:var(--head);font-weight:700;color:var(--rust);font-size:14px;margin-right:12px;letter-spacing:1px}
 .chips{display:flex;flex-wrap:wrap;gap:10px}
-.chip{font-family:var(--head);font-size:15px;color:var(--charcoal);background:var(--cream-soft);border:1px solid var(--line);border-radius:8px;padding:8px 14px}
+.chip{font-family:var(--head);font-size:16px;color:var(--charcoal);background:var(--cream-soft);border:1px solid var(--line);border-radius:8px;padding:9px 15px}
 .chip.accent{background:var(--charcoal);color:var(--cream);border-color:var(--charcoal)}
 .rule{width:120px;height:3px;background:var(--rust);margin:22px 0}
 .logo{width:110px;height:110px;border-radius:50%}
-table{width:100%;border-collapse:collapse;font-size:15px}
-th{background:var(--charcoal);color:var(--cream);text-align:left;padding:10px 14px;font-weight:500;font-size:13px;letter-spacing:.4px;font-family:var(--head)}
-td{padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.4}
-tr:nth-child(even) td{background:#f3ecdd}
-td.who{font-family:var(--head);font-weight:700;color:var(--charcoal)}
-.stat{font-family:var(--head);font-size:56px;color:var(--charcoal);line-height:1}
-.stat small{display:block;font-family:var(--body);font-size:14px;color:var(--olive-gray);margin-top:6px;letter-spacing:.3px}
+.stat{font-family:var(--head);font-size:60px;color:var(--charcoal);line-height:1}
+.stat small{display:block;font-family:var(--body);font-size:15px;color:var(--olive-gray);margin-top:6px}
+.btn{display:inline-block;background:var(--rust);color:#fff;font-family:var(--head);font-weight:500;font-size:16px;padding:13px 22px;border-radius:4px}
 
-/* dividers */
-.divider{background:var(--charcoal);color:var(--cream);justify-content:center}
-.divider .eyebrow{color:var(--gold)}
-.divider h1{color:var(--cream);font-size:76px}
-.divider .sub{color:var(--lavender)}
-.divider .rule{background:var(--rust)}
+/* photos */
+.photo{overflow:hidden;background:#ddd;position:relative}
+.photo img{width:100%;height:100%;object-fit:cover;display:block}
+.photo .cap{position:absolute;left:0;right:0;bottom:0;padding:10px 14px;background:linear-gradient(transparent,rgba(35,39,29,.85));color:var(--cream);font-family:var(--head);font-size:12px;letter-spacing:.5px}
+.frame{border:8px solid #fff;box-shadow:0 18px 40px rgba(0,0,0,.18)}
+.imgcard{background:#fff;border:1px solid var(--line);display:flex;flex-direction:column;overflow:hidden}
+.imgcard .photo{height:190px;flex:0 0 190px}
+.imgcard .txt{padding:16px 18px 18px}
+.imgcard .tag{font-family:var(--head);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--rust);margin-bottom:5px}
+.imgcard h3{font-size:19px;color:var(--charcoal);font-weight:500;margin:0 0 4px;line-height:1.2}
+.imgcard p{font-size:14.5px;line-height:1.4;margin:0;color:var(--olive-gray)}
+.portrait{width:96px;height:96px;border-radius:50%;object-fit:cover;border:4px solid #fff;box-shadow:0 6px 18px rgba(0,0,0,.18);flex:0 0 96px}
 
-/* title */
-.title{align-items:center;text-align:center;justify-content:center}
-.title h1{font-size:70px}
-.title .sub{max-width:800px}
-.title .prepared{font-family:var(--head);font-size:12px;letter-spacing:2px;color:#6f6f52}
+/* full-bleed background slides */
+.slide.bg{padding:0;color:var(--cream);background:var(--charcoal)}
+.slide.bg .bgimg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.55}
+.slide.bg .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(35,39,29,.25) 0%,rgba(35,39,29,.85) 100%)}
+.slide.bg .content{position:relative;z-index:2;padding:60px 80px 80px;display:flex;flex-direction:column;height:100%}
+.slide.bg h1,.slide.bg h2{color:var(--cream)} .slide.bg .eyebrow{color:var(--gold)} .slide.bg .sub{color:var(--lavender)} .slide.bg p{color:var(--cream)}
+.slide.bg .prepared{font-family:var(--head);font-size:12px;letter-spacing:2px;color:rgba(241,227,200,.75)}
 
 /* timeline */
-.timeline{display:flex;gap:0;align-items:stretch;flex:1}
-.tl{flex:1;position:relative;padding:22px 24px;background:#fff;border:1px solid var(--line)}
+.timeline{display:flex;flex:1;min-height:0}
+.tl{flex:1;padding:26px 28px;background:#fff;border:1px solid var(--line);display:flex;flex-direction:column;justify-content:center}
 .tl+.tl{margin-left:-1px}
-.tl .when{font-family:var(--head);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
-.tl .what{font-family:var(--head);font-size:24px;color:var(--charcoal);margin-bottom:8px}
-.tl.now{background:var(--charcoal);color:var(--cream)} .tl.now .what{color:var(--cream)} .tl.now p{color:var(--cream)}
+.tl .when{font-family:var(--head);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.tl .what{font-family:var(--head);font-size:30px;color:var(--charcoal);margin-bottom:10px;line-height:1.1}
+.tl p{font-size:17px;margin:0}
+.tl.now{background:var(--charcoal)} .tl.now .what,.tl.now p{color:var(--cream)}
 
-/* workstream rows */
-.ws{display:flex;align-items:stretch;border:1px solid var(--line);background:#fff}
-.ws .k{flex:0 0 190px;background:var(--charcoal);color:var(--cream);font-family:var(--head);font-weight:700;font-size:13px;letter-spacing:2px;text-transform:uppercase;padding:18px 20px;display:flex;align-items:center}
-.ws .v{flex:1;padding:16px 22px;font-size:17px;line-height:1.45}
-.ws .v b{color:var(--charcoal);font-family:var(--head);font-weight:500;font-size:20px;display:block;margin-bottom:2px}
-.ws.dim{opacity:.72}
+/* workstreams */
+.ws{display:flex;border:1px solid var(--line);background:#fff}
+.ws .k{flex:0 0 200px;background:var(--charcoal);color:var(--cream);font-family:var(--head);font-weight:700;font-size:13px;letter-spacing:2px;text-transform:uppercase;padding:22px;display:flex;align-items:center}
+.ws .v{flex:1;padding:20px 26px;font-size:18px;line-height:1.4;display:flex;align-items:center;gap:22px}
+.ws .v b{color:var(--charcoal);font-family:var(--head);font-weight:500;font-size:26px;flex:0 0 240px}
+.ws.dim{opacity:.7}
 
 /* 90-day flow */
-.flow{display:flex;align-items:stretch;gap:0;flex:1}
+.flow{display:flex;flex:1;min-height:0}
 .phase{flex:1;background:#fff;border:1px solid var(--line);display:flex;flex-direction:column}
 .phase .ph{background:var(--charcoal);color:var(--cream);padding:14px 18px}
 .phase .ph .days{display:block;font-family:var(--head);font-size:11px;letter-spacing:2.5px;color:var(--gold);text-transform:uppercase}
-.phase .ph .nm{display:block;font-family:var(--head);font-size:22px;margin-top:2px}
-.phase .bd{padding:16px 18px;flex:1}
-.phase .bd li{font-size:15px;margin-bottom:8px}
+.phase .ph .nm{display:block;font-family:var(--head);font-size:23px;margin-top:2px}
+.phase .bd{padding:16px 18px;flex:1} .phase .bd li{font-size:15.5px;margin-bottom:8px}
 .phase .out{border-top:2px solid var(--rust);margin:0 18px;padding:10px 0 14px;font-size:13.5px;line-height:1.4}
 .phase .out b{display:block;font-family:var(--head);color:var(--rust);font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:3px}
 .arrow{flex:0 0 42px;display:flex;align-items:center;justify-content:center;font-size:30px;color:var(--rust)}
 .strip{display:flex;border:1px solid var(--line);margin-top:14px}
-.strip .k{flex:0 0 190px;padding:12px 18px;font-family:var(--head);font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase}
-.strip .v{flex:1;padding:12px 18px;font-size:15px;line-height:1.4}
-.strip.guard .k{background:var(--rust);color:#fff}.strip.guard .v{background:#f6e3dc}
+.strip .k{flex:0 0 200px;padding:12px 18px;font-family:var(--head);font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase;background:var(--rust);color:#fff}
+.strip .v{flex:1;padding:12px 18px;font-size:15px;line-height:1.4;background:#f6e3dc}
 
-/* partnership pathway */
-.path{display:flex;gap:14px;flex:1;align-items:stretch}
-.stepc{flex:1;background:#fff;border:1px solid var(--line);display:flex;flex-direction:column;position:relative}
+/* pathway */
+.path{display:flex;gap:14px;flex:1;min-height:0}
+.stepc{flex:1;background:#fff;border:1px solid var(--line);display:flex;flex-direction:column}
 .stepc .top{padding:16px 18px 10px;display:flex;align-items:center;gap:12px}
 .circ{width:40px;height:40px;border-radius:50%;background:var(--charcoal);color:var(--cream);display:flex;align-items:center;justify-content:center;font-family:var(--head);font-weight:700;font-size:18px;flex:0 0 40px}
 .stepc .tag{font-family:var(--head);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--rust)}
 .stepc .ttl{font-family:var(--head);font-size:19px;color:var(--charcoal);line-height:1.2}
 .stepc .body{padding:0 18px 12px;font-size:14.5px;line-height:1.45;flex:1}
-.stepc .side{background:var(--box);border-top:1px solid var(--line);padding:12px 18px 14px;font-size:13.5px}
+.stepc .side{background:var(--box);border-top:1px solid var(--line);padding:12px 18px 14px}
 .stepc .side b{display:block;font-family:var(--head);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--rust);margin-bottom:4px}
 .stepc .side li{font-size:13.5px;margin-bottom:3px}
 .decide{flex:0 0 190px;display:flex;flex-direction:column;gap:10px;justify-content:center}
 .dia{width:34px;height:34px;background:var(--gold);transform:rotate(45deg);margin:6px auto 14px}
-.decide .q{background:var(--charcoal);color:var(--cream);padding:14px 16px;font-family:var(--head);font-size:15px;line-height:1.3;text-align:center}
+.decide .q{background:var(--charcoal);color:var(--cream);padding:14px 16px;font-family:var(--head);font-size:15px;text-align:center}
 .decide .q small{display:block;color:var(--gold);font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
 .decide .yes,.decide .no{padding:10px 12px;font-size:12.5px;line-height:1.35}
-.decide .yes{background:#eef0df;border-left:4px solid var(--olive)}
-.decide .no{background:#f6e3dc;border-left:4px solid var(--rust)}
+.decide .yes{background:#eef0df;border-left:4px solid var(--olive)} .decide .no{background:#f6e3dc;border-left:4px solid var(--rust)}
 .decide b{display:block;font-family:var(--head);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:2px}
 .decide .yes b{color:var(--olive)} .decide .no b{color:var(--rust)}
 
-/* website slide */
+/* browser frame */
 .shot{border:1px solid var(--line);background:#fff;box-shadow:0 18px 40px rgba(0,0,0,.18);overflow:hidden;display:flex;flex-direction:column}
 .shot .bar{height:30px;background:#e9e3d5;display:flex;align-items:center;gap:6px;padding:0 12px;font-family:var(--head);font-size:11px;color:#7a7561}
 .shot .bar i{width:10px;height:10px;border-radius:50%;background:#cfc7b2;display:inline-block}
-.shot img{width:100%;height:100%;object-fit:cover;display:block}
-.btn{display:inline-block;background:var(--rust);color:#fff;font-family:var(--head);font-weight:500;font-size:15px;padding:12px 20px;border:none;border-radius:4px;letter-spacing:.3px}
-.btn.ghost{background:transparent;color:var(--charcoal);border:1.5px solid var(--charcoal)}
+.shot .photo{flex:1}
 
 /* theme placeholders */
-.theme{border:2px dashed var(--lavender);background:#fff;padding:18px 20px;display:flex;flex-direction:column}
+.theme{border:2px dashed var(--lavender);background:rgba(255,255,255,.92);padding:18px 20px}
 .theme .n{font-family:var(--head);font-weight:700;color:var(--purple);font-size:12px;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
-.theme .t{font-family:var(--head);font-size:20px;color:var(--charcoal);margin-bottom:6px}
-.theme p{font-size:14px;color:var(--olive-gray);font-style:italic}
+.theme .t{font-family:var(--head);font-size:21px;color:var(--charcoal)}
 
-@media print{ body{overflow:visible;background:#fff} .deck{transform:none!important;box-shadow:none} .slide{display:flex;position:relative;page-break-after:always;height:720px} .nav,.hint{display:none} }
+@page{size:1280px 720px;margin:0}
+@media print{html,body{overflow:visible;background:#fff;height:auto}#stage{position:static;display:block}.deck{transform:none!important;box-shadow:none;height:auto!important;min-height:0!important;overflow:visible}.slide{display:flex!important;position:relative;inset:auto;width:1280px;height:720px;page-break-after:always;break-after:page}.slide.bg .content{height:720px}.chrome,.progress,.nav,.hint{display:none}}
+body.overview{overflow:auto}
+body.overview #stage{position:static;display:block;padding:30px}
+body.overview .deck{transform:none!important;width:auto;height:auto;background:none;box-shadow:none;display:grid;grid-template-columns:repeat(3,1fr);gap:22px;overflow:visible}
+body.overview .slide{display:flex!important;position:relative;inset:auto;width:100%;aspect-ratio:16/9;height:auto;zoom:.32;cursor:pointer;outline:2px solid rgba(255,255,255,.08)}
+body.overview .slide.active{outline:4px solid var(--gold)}
+body.overview .chrome,body.overview .progress{display:none}
 </style>
 </head>
 <body>
 <div id="stage"><div class="deck" id="deck">
 
 <!-- 1 TITLE -->
-<section class="slide title" data-sec="">
-  <img class="logo" src="assets/logo.jpg" alt="1838 Black Metropolis">
-  <div class="eyebrow" style="margin-top:26px">Historic Eden Cemetery · Project Walk-Through</div>
-  <h1>Brand Narrative, Tour &amp;<br>Technical Architecture</h1>
-  <p class="sub">What we built together, what we're handing over today, and how the next three months work.</p>
-  <div class="rule" style="margin:8px auto 22px"></div>
-  <div class="prepared">PREPARED FOR HISTORIC EDEN CEMETERY BY 1838 BLACK METROPOLIS &nbsp;·&nbsp; SEPTEMBER 2026</div>
+<section class="slide bg" data-sec="">
+  <div class="bgimg" style="background-image:url(assets/hero-aerial.jpg)"></div><div class="shade"></div>
+  <div class="content center">
+    <img class="logo" src="assets/logo.jpg" alt="1838 Black Metropolis">
+    <div class="eyebrow" style="margin-top:26px">Historic Eden Cemetery · Project Walk-Through</div>
+    <h1>Brand Narrative, Tour &amp;<br>Technical Architecture</h1>
+    <div class="rule" style="margin:6px auto 22px"></div>
+    <div class="prepared">PREPARED FOR HISTORIC EDEN CEMETERY BY 1838 BLACK METROPOLIS &nbsp;·&nbsp; SEPTEMBER 2026</div>
+  </div>
 </section>
 
 <!-- 2 ROAD AHEAD -->
 <section class="slide" data-sec="Overview">
   <div class="eyebrow">Today and the road ahead</div>
   <h2>Walk through it now. Live with it in October. Finalize by year-end.</h2>
-  <p class="sub">Everything you see today is a draft for you to react to — nothing is locked.</p>
+  <p class="sub">Nothing is locked — this is a draft for you to react to.</p>
   <div class="timeline">
-    <div class="tl now"><div class="when">Late September</div><div class="what">Walk-through &amp; handover</div><p>We present the brand narrative, the plans, the website, and the tour direction. You receive the full deliverable document and the live site.</p></div>
-    <div class="tl"><div class="when">October</div><div class="what">Your feedback</div><p>Read, click around, share with your board. Tell us what's right, what's off, and what's missing. We'll collect it in one place.</p></div>
-    <div class="tl"><div class="when">November – December</div><div class="what">Finalize</div><p>We fold in your feedback, complete the tour StoryMap, and deliver the final versions of everything.</p></div>
-  </div>
-  <div class="row" style="flex:0 0 auto;margin-top:22px;gap:18px">
-    <div class="card tint col"><div class="tag">Section 1</div><h3>Brand Narrative &amp; Awareness Strategy</h3><p>Who Eden is, how it sounds, and how awareness becomes support.</p></div>
-    <div class="card tint col"><div class="tag">Section 2</div><h3>Tour</h3><p>Key themes and an ArcGIS StoryMap that brings the story onto the grounds.</p></div>
-    <div class="card tint col"><div class="tag">Section 3</div><h3>Technical Architecture</h3><p>The website, the lot map, the data — and how to keep it running for almost nothing.</p></div>
+    <div class="tl now"><div class="when">Late September</div><div class="what">Walk-through &amp; handover</div><p>The document, the website, the plans.</p></div>
+    <div class="tl"><div class="when">October</div><div class="what">Your feedback</div><p>Read it. Click through it. Share it with your board.</p></div>
+    <div class="tl"><div class="when">November – December</div><div class="what">Finalize</div><p>Your changes folded in. Tour StoryMap complete.</p></div>
   </div>
 </section>
 
 <!-- 3 DIVIDER S1 -->
-<section class="slide divider" data-sec="">
-  <div class="eyebrow">Section 1</div>
-  <h1>Brand Narrative &amp;<br>Awareness Strategy</h1>
-  <div class="rule"></div>
-  <p class="sub">The core story of a Black institution built to preserve dignity, memory, and permanence.</p>
+<section class="slide bg" data-sec="">
+  <div class="bgimg" style="background-image:url(assets/lebanon-chapel.jpg);opacity:.5"></div><div class="shade"></div>
+  <div class="content" style="justify-content:center">
+    <div class="eyebrow">Section 1</div>
+    <h1>Brand Narrative &amp;<br>Awareness Strategy</h1>
+    <div class="rule"></div>
+    <p class="sub">The core story of a Black institution built to preserve dignity, memory, and permanence.</p>
+    <p class="small" style="color:rgba(241,227,200,.6);margin-top:auto">Chapel of the Lebanon Cemetery · Historical Society of Pennsylvania</p>
+  </div>
 </section>
 
 <!-- 4 CORE POSITIONING -->
 <section class="slide" data-sec="Section 1 · Core Positioning">
   <div class="eyebrow">Core positioning</div>
   <h2>Not simply a burial ground.</h2>
-  <div class="row" style="margin-top:8px">
-    <div class="col" style="flex:1.25">
-      <div class="callout"><span class="label">North Star</span>
-        <p class="big">Eden is the full-circle answer to a long history of Black dispossession: a place created so that dignity would not end at death, and where the lives of Black Philadelphia could remain visible, protected, and connected to future generations.</p></div>
-      <p style="margin-top:22px;font-size:17px">A sacred Black cultural landscape created through <strong>collective agency</strong> — when segregation, condemnation, and the closure of earlier Black cemeteries threatened both the dignity of the dead and the continuity of Black memory. Its power lies in <strong>the extraordinary and the everyday resting together.</strong></p>
-    </div>
-    <div class="col" style="display:flex;flex-direction:column;gap:18px;justify-content:center">
-      <div><div class="stat">1902<small>Founded by Black Philadelphians — for you, by you</small></div></div>
-      <div><div class="stat">93,000<small>Lives entrusted to Eden's care, across 17,000 lots</small></div></div>
-      <div><div class="stat">53 acres<small>Black-owned, Black-controlled sacred ground</small></div></div>
+  <div class="row" style="margin-top:6px">
+    <div class="col photo frame" style="flex:1.1"><img src="assets/eden-sign.jpg" alt="Historic Eden Cemetery sign"><div class="cap">The gate at Springfield Road · Est. 1902</div></div>
+    <div class="col" style="display:flex;flex-direction:column;justify-content:space-between">
+      <div class="callout"><span class="label">North Star</span><p class="big" style="font-size:22px">A place created so that dignity would not end at death — where the lives of Black Philadelphia remain visible, protected, and connected to future generations.</p></div>
+      <div style="display:flex;gap:26px;margin-top:20px">
+        <div class="stat">1902<small>Founded — for you, by you</small></div>
+        <div class="stat">93,000<small>Lives · 17,000 lots</small></div>
+        <div class="stat">53<small>Acres of sacred ground</small></div>
+      </div>
     </div>
   </div>
 </section>
@@ -228,45 +226,31 @@ td.who{font-family:var(--head);font-weight:700;color:var(--charcoal)}
 <!-- 5 PROMISE + IDEA -->
 <section class="slide" data-sec="Section 1 · Core Positioning">
   <div class="eyebrow">Brand promise &amp; primary brand idea</div>
-  <h2>What Eden protects — and how we say it.</h2>
-  <div class="grid2" style="margin-top:10px">
-    <div class="card" style="justify-content:center">
-      <div class="tag">Brand promise</div>
-      <p class="lead" style="font-size:24px">Eden protects more than graves. It protects the <strong>dignity, evidence, memory, and continuity of Black life</strong> — so that what was pushed out of sight is never pushed out of history.</p>
-    </div>
-    <div class="dark" style="display:flex;flex-direction:column;justify-content:center">
-      <span class="label">Primary brand idea</span>
-      <p style="font-family:var(--head);font-size:32px;line-height:1.3;margin:0">From displacement to dignity.<br>From burial to memory.<br><strong style="color:var(--gold)">From the ancestors to us.</strong></p>
+  <h2>What Eden protects.</h2>
+  <div class="row" style="margin-top:6px">
+    <div class="col photo frame" style="flex:.9"><img src="assets/marian-anderson-grave.jpg" alt="Anderson–DePreist headstone at Eden"><div class="cap">The Anderson–DePreist family stone</div></div>
+    <div class="col" style="flex:1.3;display:flex;flex-direction:column;gap:20px;justify-content:center">
+      <div class="card" style="flex:0"><div class="tag">Brand promise</div><p class="lead" style="margin:0">Eden protects more than graves. It protects the <strong>dignity, evidence, memory, and continuity of Black life.</strong></p></div>
+      <div class="dark" style="flex:0"><span class="label">Primary brand idea</span><p style="font-family:var(--head);font-size:30px;line-height:1.25;margin:0">From displacement to dignity.<br>From burial to memory.<br><strong style="color:var(--gold)">From the ancestors to us.</strong></p></div>
     </div>
   </div>
-  <div class="callout" style="margin-top:20px;padding:16px 24px"><span class="label">Strategic objective</span>
-    <p style="margin:0;font-size:17px">Drive awareness of Eden as an essential Black cultural institution and <strong>convert</strong> that awareness into visitation, partnership, sponsorship, preservation support, and long-term financial sustainability.</p></div>
 </section>
 
 <!-- 6 VOICE -->
 <section class="slide" data-sec="Section 1 · Voice">
   <div class="eyebrow">How Eden should sound</div>
-  <h2>Reverence, agency, intimacy, historical consequence.</h2>
+  <h2>Reverence. Agency. Intimacy. Consequence.</h2>
   <p class="sub">Never morbidity, nostalgia, or generic heritage tourism.</p>
   <div class="row">
-    <div class="col" style="flex:1.1">
-      <ul style="font-size:16px">
-        <li><strong>Sacred, not solemn-only.</strong> Center continuity, dignity, kinship, and ancestral relationship — not fear.</li>
-        <li><strong>Historically grounded.</strong> Names, places, dates, and institutional history make the significance undeniable.</li>
-        <li><strong>Black-centered and self-determined.</strong> Something Black Philadelphians <em>built</em> — not merely a place they happen to be buried.</li>
-        <li><strong>Accessible, not flattened.</strong> Clear for families, students, media — with depth intact.</li>
-        <li><strong>Present-tense.</strong> Eden is not a relic. It is an active cemetery, classroom, and living institution.</li>
-      </ul>
-    </div>
-    <div class="col">
-      <h3>In the community's own words</h3>
-      <div class="chips" style="margin-bottom:18px">
-        <span class="chip">That's ours</span><span class="chip">Eden held them.</span><span class="chip">From the ordinary to the extraordinary</span><span class="chip">Where Black memory lives</span>
+    <div class="col photo frame" style="flex:.85"><img src="assets/bascom-family.jpg" alt="The Bascom family"><div class="cap">The Bascom family</div></div>
+    <div class="col" style="flex:1.3;display:flex;flex-direction:column;justify-content:center">
+      <div class="chips" style="margin-bottom:22px">
+        <span class="chip">Sacred, not solemn-only</span><span class="chip">Historically grounded</span><span class="chip">Black-centered &amp; self-determined</span><span class="chip">Accessible, not flattened</span><span class="chip">Present-tense</span>
       </div>
       <h3>Headline copy</h3>
       <div class="chips">
         <span class="chip accent">Eden held them. Eden holds us still.</span>
-        <span class="chip accent">Founded for dignity. Preserved for us.</span>
+        <span class="chip accent">That's ours.</span>
         <span class="chip accent">93,000 lives. One sacred Black archive.</span>
         <span class="chip accent">Black history will not be buried twice.</span>
       </div>
@@ -278,12 +262,12 @@ td.who{font-family:var(--head);font-weight:700;color:var(--charcoal)}
 <section class="slide" data-sec="Section 1 · Narrative Pillars">
   <div class="eyebrow">Narrative pillars</div>
   <h2>Five ways into one story.</h2>
-  <div class="row" style="gap:16px;margin-top:14px">
-    <div class="card col"><div class="tag">01</div><h3>Dignity as Resistance</h3><p>Founded so death would not become another site of racial dispossession. Black-controlled burial space is an act of agency.</p></div>
-    <div class="card col"><div class="tag">02</div><h3>The Collection Cemetery</h3><p>When earlier Black burial grounds were forced to close, Eden became the place of return. It gathered what the city displaced.</p></div>
-    <div class="card col"><div class="tag">03</div><h3>Black Philadelphia in Full</h3><p>The famous and the familiar — 93,000 stories across class, profession, faith, art, science, service, and everyday life.</p></div>
-    <div class="card col"><div class="tag">04</div><h3>Memory Across Generations</h3><p>Where descendants find evidence of themselves. Ancestry made tangible for the generations who come after.</p></div>
-    <div class="card col"><div class="tag">05</div><h3>A Living Future</h3><p>Preservation is not backward-looking. Protecting Eden enables education, research, family connection, and community ownership.</p></div>
+  <div class="grid5" style="margin-top:10px">
+    <div class="imgcard"><div class="photo"><img src="assets/celestine-cromwell-grave.jpg" alt=""></div><div class="txt"><div class="tag">01</div><h3>Dignity as Resistance</h3><p>Black-controlled burial space is an act of agency.</p></div></div>
+    <div class="imgcard"><div class="photo"><img src="assets/lebanon-chapel.jpg" alt=""></div><div class="txt"><div class="tag">02</div><h3>The Collection Cemetery</h3><p>It gathered what the city displaced.</p></div></div>
+    <div class="imgcard"><div class="photo"><img src="assets/bascom-family.jpg" alt=""></div><div class="txt"><div class="tag">03</div><h3>Black Philadelphia in Full</h3><p>The famous and the familiar.</p></div></div>
+    <div class="imgcard"><div class="photo"><img src="assets/venning-family.jpg" alt=""></div><div class="txt"><div class="tag">04</div><h3>Memory Across Generations</h3><p>Where descendants find evidence of themselves.</p></div></div>
+    <div class="imgcard"><div class="photo"><img src="assets/hero-aerial.jpg" alt=""></div><div class="txt"><div class="tag">05</div><h3>A Living Future</h3><p>Preservation is not backward-looking.</p></div></div>
   </div>
 </section>
 
@@ -291,11 +275,10 @@ td.who{font-family:var(--head);font-weight:700;color:var(--charcoal)}
 <section class="slide" data-sec="Section 1 · Elevator Pitches">
   <div class="eyebrow">Elevator pitches · three of ten</div>
   <h2>Say it in thirty seconds.</h2>
-  <p class="sub">Ten pitches in the appendix, each a different doorway. <em>Italics are workshop participants' own words.</em></p>
-  <div class="grid3">
-    <div class="card"><div class="tag">The F.U.B.U. pitch</div><p>In 1902, a group of Black Philadelphians did something radical: they built their own. For generations, Black people had been denied dignity in death. So Black Philadelphia built Eden. For You. By You. Ninety-three thousand souls on 53 acres of Black-owned, Black-controlled sacred ground. <em>That's ours.</em> It has been from the beginning. It still is.</p></div>
-    <div class="card tint"><div class="tag">The reinterment / justice pitch</div><p>Lebanon Cemetery. Olive Cemetery. The great Black burial grounds of Philadelphia were forced to close. Forced. Other cemeteries were not forced to move. Only theirs. <em>Even in death, the mistreatment continued.</em> But Eden held them. Eden holds them still. What looks like a cemetery is an act of resistance — 124 years of refusing to let Black history be buried twice.</p></div>
-    <div class="card"><div class="tag">The time-travel pitch</div><p>What if you could sit in the same space as Marian Anderson, Frances Watkins Harper, and William Still? Eden is <em>time travel — the past in the present.</em> Ninety-three thousand stories of ordinary people who did extraordinary things, waiting to be heard. Come sit with your ancestors. <em>History ignored is history repeated.</em> Eden won't let you forget.</p></div>
+  <div class="grid3" style="margin-top:10px">
+    <div class="card"><div style="display:flex;gap:16px;align-items:center;margin-bottom:14px"><img class="portrait" src="assets/founder-portrait.jpg" alt=""><div class="tag" style="margin:0">The F.U.B.U. pitch</div></div><p>In 1902, Black Philadelphians did something radical: they built their own. For You. By You. Ninety-three thousand souls on Black-owned, Black-controlled sacred ground. <em>That's ours.</em> It still is.</p></div>
+    <div class="card tint"><div style="display:flex;gap:16px;align-items:center;margin-bottom:14px"><img class="portrait" src="assets/octavius-catto.jpg" alt=""><div class="tag" style="margin:0">The reinterment pitch</div></div><p>Lebanon. Olive. The great Black burial grounds were forced to close. Only theirs. <em>Even in death, the mistreatment continued.</em> But Eden held them. Eden holds them still.</p></div>
+    <div class="card"><div style="display:flex;gap:16px;align-items:center;margin-bottom:14px"><img class="portrait" src="assets/marian-anderson.jpg" alt=""><div class="tag" style="margin:0">The time-travel pitch</div></div><p>Sit in the same space as Marian Anderson, Frances Harper, and William Still. <em>Time travel — the past in the present.</em> Come sit with your ancestors. Eden won't let you forget.</p></div>
   </div>
 </section>
 
@@ -303,12 +286,12 @@ td.who{font-family:var(--head);font-weight:700;color:var(--charcoal)}
 <section class="slide" data-sec="Section 1 · Audience Messaging">
   <div class="eyebrow">Audience messaging</div>
   <h2>One story, different doorways.</h2>
-  <p class="sub">The core narrative stays consistent; the reason to care changes by audience.</p>
+  <p class="sub">The story stays the same; the reason to care changes.</p>
   <div class="grid4">
-    <div class="card"><div class="tag">Black Philadelphians</div><p>Eden belongs inside the living cultural map of Black Philadelphia — a place to find ancestors, gather across generations, and claim a heritage that has repeatedly been displaced.</p><p class="small mt"><strong>Ask:</strong> Visit. Bring family. Research your people. Become a recurring supporter.</p></div>
-    <div class="card tint"><div class="tag">National audiences</div><p>A nationally significant landscape where abolition, voting rights, faith, medicine, architecture, and civil rights converge — American history understood through Black lives.</p><p class="small mt"><strong>Ask:</strong> Visit when in Philadelphia. Put Eden on heritage itineraries.</p></div>
-    <div class="card"><div class="tag">Funders &amp; sponsors</div><p>Both a preservation responsibility and a public-history opportunity: 93,000 records and a rare Black-controlled cultural landscape.</p><p class="small mt"><strong>Ask:</strong> Fund preservation, digitization, interpretation, programming, access.</p></div>
-    <div class="card tint"><div class="tag">Media</div><p>What happens when Black communities create permanence in response to dispossession? Jim Crow, cemetery displacement, institution-building, descendant memory, urgent need.</p><p class="small mt"><strong>Ask:</strong> Cover Eden as a living institution — not only during heritage months.</p></div>
+    <div class="card"><div class="tag">Black Philadelphians</div><h3>Find your people. Claim what's yours.</h3><p class="small" style="margin-top:auto">Visit · Bring family · Research · Support</p></div>
+    <div class="card tint"><div class="tag">National audiences</div><h3>American history through Black lives.</h3><p class="small" style="margin-top:auto">Visit · Add Eden to heritage itineraries</p></div>
+    <div class="card"><div class="tag">Funders &amp; sponsors</div><h3>Protect 93,000 records and a rare landscape.</h3><p class="small" style="margin-top:auto">Fund preservation · digitization · education · access</p></div>
+    <div class="card tint"><div class="tag">Media</div><h3>Permanence in response to dispossession.</h3><p class="small" style="margin-top:auto">Cover Eden as a living institution</p></div>
   </div>
 </section>
 
@@ -317,10 +300,10 @@ td.who{font-family:var(--head);font-weight:700;color:var(--charcoal)}
   <div class="eyebrow">Strategic sequencing</div>
   <h2>Three workstreams, in order.</h2>
   <p class="sub">Build awareness before building social.</p>
-  <div style="display:flex;flex-direction:column;gap:14px;flex:1;justify-content:center">
-    <div class="ws"><div class="k">Workstream 1</div><div class="v"><b>Awareness</b>Website + sponsorship + community partnerships. Make Eden easier to understand, visit, support, and partner with.</div></div>
-    <div class="ws"><div class="k">Workstream 2</div><div class="v"><b>Sustainability</b>Establish sponsorship and financial sustainability. Turn cultural importance into sustainable support.</div></div>
-    <div class="ws dim"><div class="k">Workstream 3</div><div class="v"><b>Social media — later</b>Build social only when Eden has the capacity, content pipeline, governance, and response structure to sustain it.</div></div>
+  <div style="display:flex;flex-direction:column;gap:16px;flex:1;justify-content:center">
+    <div class="ws"><div class="k">Workstream 1</div><div class="v"><b>Awareness</b>Website · sponsorship · community partnerships</div></div>
+    <div class="ws"><div class="k">Workstream 2</div><div class="v"><b>Sustainability</b>Sponsorship and financial sustainability</div></div>
+    <div class="ws dim"><div class="k">Workstream 3</div><div class="v"><b>Social media</b>Only when Eden has the capacity to sustain it</div></div>
   </div>
 </section>
 
@@ -328,48 +311,38 @@ td.who{font-family:var(--head);font-weight:700;color:var(--charcoal)}
 <section class="slide" data-sec="Section 1 · Workstream 1">
   <div class="eyebrow">Workstream 1 · Awareness</div>
   <h2>Restore Eden to the cultural map.</h2>
-  <div class="grid2" style="margin-top:10px">
-    <div class="card">
-      <div class="tag">1 · Website</div><h3>Make Eden's significance immediately legible</h3>
-      <ul><li>Primary narrative hub and conversion tool — understand the story in seconds, know what to do next.</li><li>Clear pathways: Visit · Find an Ancestor / Map · History · Notables · Tours · Support.</li><li>Lead with the Beginnings story — Lebanon, Olive, the blocked gate, the first burial.</li><li>Donation and sponsorship visible throughout — not just one page.</li></ul>
-    </div>
-    <div class="card tint">
-      <div class="tag">2 · Community partnerships</div><h3>A place to visit, learn, gather, and commune with memory</h3>
-      <ul><li>Recurring heritage days, family-history sessions, veteran remembrance, thematic walking tours.</li><li>Partner with Black churches, Divine Nine, schools, HBCU alumni, genealogical groups, cultural institutions.</li><li>"That's ours" as the ownership frame.</li><li>Community ambassadors who bring their own audiences in.</li></ul>
+  <div class="row" style="margin-top:8px">
+    <div class="col photo frame" style="flex:.9"><img src="assets/catto-grave.jpg" alt="Octavius Catto monument"><div class="cap">Octavius V. Catto · Lebanon Section, Lot 124</div></div>
+    <div class="col" style="flex:1.2;display:flex;flex-direction:column;gap:18px;justify-content:center">
+      <div class="card" style="flex:0"><div class="tag">1 · Website</div><h3>Make Eden's significance immediately legible</h3><p>Understand the story in seconds. Know what to do next.</p></div>
+      <div class="card tint" style="flex:0"><div class="tag">2 · Community partnerships</div><h3>A place to visit, learn, gather</h3><p>Churches · Divine Nine · schools · HBCU alumni · genealogists · cultural institutions</p></div>
     </div>
   </div>
-  <div class="dark" style="margin-top:16px;padding:14px 24px"><span class="label">Success looks like</span><p style="margin:0;font-size:15px">More people understand why Eden matters; more Black Philadelphians see Eden as their inheritance; more institutions see a credible role; and awareness becomes the financial support that protects the cemetery for the next generation.</p></div>
 </section>
 
 <!-- 12 WS2 -->
 <section class="slide" data-sec="Section 1 · Workstream 2">
   <div class="eyebrow">Workstream 2 · Sponsorship &amp; financial sustainability</div>
-  <h2>Turn cultural importance into sustainable support.</h2>
-  <p class="sub">Because preservation without resources is vulnerability. Sponsorship is a primary brand activation, not an afterthought.</p>
-  <div class="row">
-    <div class="col">
-      <h3>Sponsorship positioning</h3>
-      <p style="font-size:16px">Don't ask sponsors to "support a cemetery." Ask them to protect one of the most important repositories of Black Philadelphia's cultural memory, preserve 93,000 individual histories, expand public access to a nationally significant landscape, and ensure that Black-controlled sacred space survives.</p>
-      <h3 style="margin-top:14px">Who to approach</h3>
-      <ul style="font-size:15px"><li>Philadelphia-region corporations committed to Black communities, preservation, education, civic life.</li><li>Foundations focused on African American history, archives, public humanities, genealogy.</li><li>Healthcare, architecture, higher-ed, arts, faith, and financial institutions whose own histories intersect with people buried at Eden.</li></ul>
+  <h2>Preservation without resources is vulnerability.</h2>
+  <div class="row" style="margin-top:8px">
+    <div class="col" style="flex:1.2;display:flex;flex-direction:column;justify-content:center;gap:18px">
+      <div class="callout"><span class="label">Core sponsorship message</span><p class="big" style="font-size:23px">Preserving Eden means preserving evidence: names, families, institutions, stories, monuments, records — and the ground itself.</p></div>
+      <p style="font-size:17px;margin:0"><strong>Who to approach:</strong> Philadelphia-region corporations · foundations for Black history and archives · institutions whose own histories intersect with people buried at Eden.</p>
     </div>
-    <div class="col" style="display:flex;flex-direction:column;justify-content:center">
-      <div class="callout"><span class="label">Core sponsorship message</span><p class="big" style="font-size:23px">Preserving Eden means preserving evidence: names, families, institutions, stories, monuments, burial records, and the physical ground that connects Black Philadelphia's past to its future.</p></div>
-    </div>
+    <div class="col photo frame" style="flex:.9"><img src="assets/archive-ledgers.jpg" alt="Eden's interment ledgers"><div class="cap">Section books and interment ledgers · Eden Cemetery archive</div></div>
   </div>
 </section>
 
 <!-- 13 WS3 -->
 <section class="slide" data-sec="Section 1 · Workstream 3">
   <div class="eyebrow">Workstream 3 · Social media</div>
-  <h2>Build social when Eden can sustain it — not before.</h2>
+  <h2>Build social when Eden can sustain it.</h2>
   <div class="row" style="margin-top:8px">
-    <div class="col">
-      <p class="lead">Social media is where Eden's community will gather, where events get announced, and where partnerships form in public. It's also the one channel that punishes neglect.</p>
-      <ul style="margin-top:12px"><li><strong>Facebook first.</strong> The audience is already there; Events are built in and free.</li><li><strong>Instagram by cross-posting.</strong> One post, two platforms — a setting, not a second job.</li><li><strong>One volunteer, one job.</strong> Post events, share news, answer messages. Narrow scope is the point.</li><li><strong>Events feed the website.</strong> Post once on Facebook; the site reflects it — no website edits.</li></ul>
+    <div class="col" style="display:flex;flex-direction:column;justify-content:center">
+      <ul style="font-size:20px"><li><strong>Facebook first</strong> — the audience is already there</li><li><strong>Instagram by cross-posting</strong> — a setting, not a second job</li><li><strong>One volunteer, one job</strong></li><li><strong>Events feed the website</strong> — no website edits</li></ul>
     </div>
     <div class="col" style="display:flex;flex-direction:column;justify-content:center">
-      <div class="dark"><span class="label">The gate to open it</span><p style="font-size:17px">Eden has the <strong>capacity</strong>, a <strong>content pipeline</strong> (tour photography, archival images, notables), <strong>governance</strong> (who posts, who approves), and a <strong>response structure</strong> (who answers within a day).</p><p style="font-size:15px;margin-top:10px;color:var(--lavender)">Until then, Workstreams 1 and 2 do the work — and build the content social will need.</p></div>
+      <div class="dark"><span class="label">The gate to open it</span><p style="font-size:19px">Capacity · a content pipeline · governance · someone who answers within a day.</p></div>
     </div>
   </div>
 </section>
@@ -378,12 +351,12 @@ td.who{font-family:var(--head);font-weight:700;color:var(--charcoal)}
 <section class="slide" data-sec="Section 1 · Sponsorship Platforms">
   <div class="eyebrow">Priority sponsorship platforms</div>
   <h2>Four types of partners.</h2>
-  <p class="sub">Match every prospect to one platform — never send a generic ask.</p>
+  <p class="sub">Match every prospect to one — never a generic ask.</p>
   <div class="grid4">
-    <div class="card" style="border-top:5px solid var(--rust)"><div class="tag">Preservation Partner</div><p>Monument conservation, landscape care, archival protection, and preservation of historic sections.</p></div>
-    <div class="card" style="border-top:5px solid var(--gold)"><div class="tag">Digital Memory Partner</div><p>Digitization of records, interactive mapping, searchable family-history resources, and interpretive storytelling.</p></div>
-    <div class="card" style="border-top:5px solid var(--olive)"><div class="tag">Education Partner</div><p>School visits, educator resources, student transportation, tours, and public-history programming.</p></div>
-    <div class="card" style="border-top:5px solid var(--purple)"><div class="tag">Community Legacy Partner</div><p>Free community days, genealogy events, women's programs, veteran remembrance, and intergenerational gatherings.</p></div>
+    <div class="imgcard" style="border-top:5px solid var(--rust)"><div class="photo" style="height:170px;flex-basis:170px"><img src="assets/memorial-monuments.jpg" alt=""></div><div class="txt"><h3>Preservation Partner</h3><p>Monuments · landscape · archives · historic sections</p></div></div>
+    <div class="imgcard" style="border-top:5px solid var(--gold)"><div class="photo" style="height:170px;flex-basis:170px"><img src="assets/section-reference.jpg" alt=""></div><div class="txt"><h3>Digital Memory Partner</h3><p>Digitization · mapping · searchable family history</p></div></div>
+    <div class="imgcard" style="border-top:5px solid var(--olive)"><div class="photo" style="height:170px;flex-basis:170px"><img src="assets/william-still-portrait.jpg" alt=""></div><div class="txt"><h3>Education Partner</h3><p>School visits · tours · public-history programs</p></div></div>
+    <div class="imgcard" style="border-top:5px solid var(--purple)"><div class="photo" style="height:170px;flex-basis:170px"><img src="assets/venning-family.jpg" alt=""></div><div class="txt"><h3>Community Legacy Partner</h3><p>Community days · genealogy · remembrance</p></div></div>
   </div>
 </section>
 
@@ -404,7 +377,7 @@ td.who{font-family:var(--head);font-weight:700;color:var(--charcoal)}
       <div class="bd"><ul><li><strong>Begin outreach</strong> to matched prospects, leading with the platform that fits each.</li><li><strong>Open the first partnership conversations</strong> using the small-step pathway.</li></ul></div>
       <div class="out"><b>Ready by day 90</b>First sponsorship conversations underway · First partnership pilots scoped</div></div>
   </div>
-  <div class="strip guard"><div class="k">Guardrail · all 90 days</div><div class="v"><strong>Defer broad social-media expansion</strong> until Eden has the capacity to sustain it well. Awareness first; social later.</div></div>
+  <div class="strip"><div class="k">Guardrail · all 90 days</div><div class="v"><strong>Defer broad social-media expansion</strong> until Eden has the capacity to sustain it well. Awareness first; social later.</div></div>
 </section>
 
 <!-- 16 PARTNERSHIP PATHWAY -->
@@ -413,71 +386,74 @@ td.who{font-family:var(--head);font-weight:700;color:var(--charcoal)}
   <h2>Test small. Learn fast. Grow what proves itself.</h2>
   <div class="path" style="margin-top:10px">
     <div class="stepc"><div class="top"><div class="circ">1</div><div><div class="tag">Reach out</div><div class="ttl">Open the door</div></div></div>
-      <div class="body">Connect with a partner whose mission already touches Eden — a church, Divine Nine chapter, school, alumni network, genealogical group. Lead with the story, not the ask.</div>
+      <div class="body">Connect with a partner whose mission already touches Eden. Lead with the story, not the ask.</div>
       <div class="side"><b>Eden's move</b><ul><li>One warm introduction</li><li>Share "Why Eden Matters"</li><li>Ask for a conversation, not a commitment</li></ul></div></div>
     <div class="stepc"><div class="top"><div class="circ">2</div><div><div class="tag">Start small</div><div class="ttl">One easy thing together</div></div></div>
-      <div class="body">A single, low-lift joint action with a clear date and end — small enough that "yes" is easy, real enough that both sides learn: a tour for their members, a family-history afternoon, a "That's ours" visit.</div>
-      <div class="side"><b>Eden's move</b><ul><li>Offer two or three options</li><li>One event, one date</li><li>Agree who does what — briefly, in writing</li></ul></div></div>
+      <div class="body">A single, low-lift joint action with a clear date and end — a tour for their members, a family-history afternoon, a "That's ours" visit.</div>
+      <div class="side"><b>Eden's move</b><ul><li>Offer two or three options</li><li>One event, one date</li><li>Agree who does what</li></ul></div></div>
     <div class="stepc"><div class="top"><div class="circ">3</div><div><div class="tag">Build the relationship</div><div class="ttl">Trust while you work</div></div></div>
-      <div class="body">The joint action <em>is</em> the relationship-building. Co-plan, show up for each other, and notice how it feels — communication, follow-through, shared values, whether their people connect with Eden.</div>
-      <div class="side"><b>Eden's move</b><ul><li>Co-plan, don't just host</li><li>Thank them publicly and personally</li><li>Hold a short, honest debrief</li></ul></div></div>
+      <div class="body">The joint action <em>is</em> the relationship-building. Co-plan, show up, and notice how it feels.</div>
+      <div class="side"><b>Eden's move</b><ul><li>Co-plan, don't just host</li><li>Thank them publicly</li><li>Hold a short, honest debrief</li></ul></div></div>
     <div class="decide"><div class="dia"></div><div class="q"><small>Decision point</small>Worth continuing?</div>
       <div class="yes"><b>Yes — go deeper</b>Shared values, follow-through, their people showed up.</div>
       <div class="no"><b>Not yet — part warmly</b>Keep the door open; move to the next partner.</div></div>
     <div class="stepc"><div class="top"><div class="circ">4</div><div><div class="tag">Deepen</div><div class="ttl">Sustainable work together</div></div></div>
-      <div class="body">Turn one-time into repeatable: an annual program, a recurring tour or heritage day, an ambassador role, or a sponsorship match to one of the four platforms. Name it; put it on both calendars.</div>
+      <div class="body">Turn one-time into repeatable: an annual program, an ambassador role, or a sponsorship match to one of the four platforms.</div>
       <div class="side"><b>Eden's move</b><ul><li>Propose a recurring rhythm</li><li>Invite them to be an ambassador</li><li>Match them to a platform</li></ul></div></div>
   </div>
 </section>
 
 <!-- 17 DIVIDER S2 -->
-<section class="slide divider" data-sec="">
-  <div class="eyebrow">Section 2</div>
-  <h1>Tour</h1>
-  <div class="rule"></div>
-  <p class="sub">Bringing the brand narrative onto the grounds — an ArcGIS StoryMap organized by theme.</p>
+<section class="slide bg" data-sec="">
+  <div class="bgimg" style="background-image:url(assets/section-reference.jpg);opacity:.6"></div><div class="shade"></div>
+  <div class="content" style="justify-content:center">
+    <div class="eyebrow">Section 2</div>
+    <h1>Tour</h1>
+    <div class="rule"></div>
+    <p class="sub">Bringing the brand narrative onto the grounds — an ArcGIS StoryMap organized by theme.</p>
+  </div>
 </section>
 
 <!-- 18 TOUR -->
 <section class="slide" data-sec="Section 2 · Tour">
   <div class="eyebrow">Eden walking tour · key themes</div>
   <h2>Themes that guide the walk.</h2>
-  <p class="sub">Each theme becomes a chapter in the StoryMap and a stop-set on the grounds. <em>(Theme titles to be filled in from the tour outline.)</em></p>
-  <div class="grid4" style="flex:0 0 auto;min-height:230px">
-    <div class="theme"><div class="n">Theme 1</div><div class="t">[Theme title]</div><p>One line on what this chapter of the walk reveals and who the visitor meets.</p></div>
-    <div class="theme"><div class="n">Theme 2</div><div class="t">[Theme title]</div><p>One line on what this chapter of the walk reveals and who the visitor meets.</p></div>
-    <div class="theme"><div class="n">Theme 3</div><div class="t">[Theme title]</div><p>One line on what this chapter of the walk reveals and who the visitor meets.</p></div>
-    <div class="theme"><div class="n">Theme 4</div><div class="t">[Theme title]</div><p>One line on what this chapter of the walk reveals and who the visitor meets.</p></div>
-  </div>
-  <div class="dark" style="margin-top:18px;display:flex;align-items:center;gap:26px;padding:18px 26px">
-    <div style="flex:1"><span class="label">Live demo</span><p style="margin:0;font-size:17px">ArcGIS StoryMap — themed chapters, the notables placed on the grounds, and the route between them. Built on the same lot coordinates as the website's map.</p></div>
-    <span class="btn" style="background:var(--gold);color:var(--ink)">Demo the StoryMap →</span>
+  <div class="row" style="margin-top:6px">
+    <div class="col photo frame" style="flex:1"><img src="assets/plan-base.png" alt="Eden section plan" style="object-fit:contain;background:#f5efe3"><div class="cap">Eden's sections · the ground the tour walks</div></div>
+    <div class="col" style="flex:1;display:flex;flex-direction:column;gap:12px;justify-content:center">
+      <div class="theme"><div class="n">Theme 1</div><div class="t">[Theme title]</div></div>
+      <div class="theme"><div class="n">Theme 2</div><div class="t">[Theme title]</div></div>
+      <div class="theme"><div class="n">Theme 3</div><div class="t">[Theme title]</div></div>
+      <div class="theme"><div class="n">Theme 4</div><div class="t">[Theme title]</div></div>
+      <div class="dark" style="padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px"><span style="font-family:var(--head);font-size:17px">Live demo · ArcGIS StoryMap</span><span class="btn" style="background:var(--gold);color:var(--ink)">Open →</span></div>
+    </div>
   </div>
 </section>
 
 <!-- 19 DIVIDER S3 -->
-<section class="slide divider" data-sec="">
-  <div class="eyebrow">Section 3</div>
-  <h1>Technical<br>Architecture</h1>
-  <div class="rule"></div>
-  <p class="sub">What has been delivered — and how Eden keeps it running with almost no cost and no dedicated technical staff.</p>
+<section class="slide bg" data-sec="">
+  <div class="bgimg" style="background-image:url(assets/archive-ledgers.jpg);opacity:.5"></div><div class="shade"></div>
+  <div class="content" style="justify-content:center">
+    <div class="eyebrow">Section 3</div>
+    <h1>Technical<br>Architecture</h1>
+    <div class="rule"></div>
+    <p class="sub">What has been delivered — and how Eden keeps it running with almost no cost and no dedicated technical staff.</p>
+  </div>
 </section>
 
 <!-- 20 DELIVERABLES -->
 <section class="slide" data-sec="Section 3 · Summary of Work">
   <div class="eyebrow">Summary of work · the data</div>
   <h2>From scanned pages to a searchable record.</h2>
-  <p class="sub">Eden's physical lists were scanned and transcribed. That work powers the notables directory, the lot map, and everything that comes next. It is all yours.</p>
-  <table>
-    <thead><tr><th style="width:38%">Document</th><th>What it is</th></tr></thead>
-    <tbody>
-      <tr><td class="who">Original Database from Scanned Word Documents <span class="small">(.xlsx)</span></td><td>The first full transcription — every entry kept exactly as written alongside its source page, so any record can be checked against the scan.</td></tr>
-      <tr><td class="who">Cleaned Database from Scanned Word Documents <span class="small">(.xlsx)</span></td><td>The same records after cleanup — standardized names, sections, lots, and dates.</td></tr>
-      <tr><td class="who">Cleaned Notables Database for Website <span class="small">(Google Sheet)</span></td><td>The notables listing as published: name, dates, category, biography, section and lot. Edit this sheet to update the directory.</td></tr>
-      <tr><td class="who">Cleaned Full Lot Index with Coordinates <span class="small">(Google Sheet)</span></td><td>Every one of Eden's ~17,000 lots with geographic coordinates — the data behind Find a Lot and the notables map.</td></tr>
-    </tbody>
-  </table>
-  <p class="small" style="margin-top:14px">Shared folder: <a href="https://drive.google.com/drive/u/0/folders/1iSXQth_0a3pwtehL7UQyQozYeoEEPkTD" target="_blank" rel="noopener">drive.google.com/…/1iSXQth_0a3pwtehL7UQyQozYeoEEPkTD</a></p>
+  <div class="row" style="margin-top:6px">
+    <div class="col photo frame" style="flex:.8"><img src="assets/archive-ledgers.jpg" alt="Eden's ledgers"><div class="cap">The source · Eden's section books and ledgers</div></div>
+    <div class="col" style="flex:1.3;display:grid;grid-template-columns:1fr 1fr;gap:14px;align-content:center">
+      <div class="card"><div class="tag">.xlsx</div><h3>Original Database from Scanned Word Documents</h3><p class="small">Every entry as written, with its source page</p></div>
+      <div class="card tint"><div class="tag">.xlsx</div><h3>Cleaned Database from Scanned Word Documents</h3><p class="small">Standardized names, sections, lots, dates</p></div>
+      <div class="card tint"><div class="tag">Google Sheet</div><h3>Cleaned Notables Database for Website</h3><p class="small">Edit this to update the directory</p></div>
+      <div class="card"><div class="tag">Google Sheet</div><h3>Cleaned Full Lot Index with Coordinates</h3><p class="small">~17,000 lots, each with coordinates</p></div>
+    </div>
+  </div>
 </section>
 
 <!-- 21 WEBSITE -->
@@ -485,31 +461,27 @@ td.who{font-family:var(--head);font-weight:700;color:var(--charcoal)}
   <div class="eyebrow">Summary of work · the website</div>
   <h2>Come sit with your ancestors.</h2>
   <div class="row" style="margin-top:6px">
-    <div class="col" style="flex:1.35">
-      <div class="shot" style="height:100%"><div class="bar"><i></i><i></i><i></i>&nbsp; 1838blackmetropolis.github.io/Eden-Cemetary</div>
-        <img src="https://1838blackmetropolis.github.io/Eden-Cemetary/assets/hero-aerial.png" alt="Eden Cemetery website hero"></div>
-    </div>
-    <div class="col">
-      <h3>What we'll show</h3>
-      <ul style="font-size:15.5px"><li><strong>Home</strong> — the story, the proof points, how to reach Eden.</li><li><strong>History</strong> — Lebanon, Olive, the blocked gate, the first burial.</li><li><strong>Notable Residents</strong> — search and filter, section and lot for each.</li><li><strong>For Kids</strong> — Jubilee School letters and the printable kids' map.</li><li><strong>Map &amp; Tours</strong> — interactive notables map.</li><li><strong>Find a Lot</strong> — type a lot number, see it on the grounds.</li><li><strong>Friends of Eden</strong> — the archival preservation ask.</li></ul>
-      <p style="margin-top:14px"><a class="btn" href="https://1838blackmetropolis.github.io/Eden-Cemetary/" target="_blank" rel="noopener">Open the live site →</a></p>
+    <div class="col shot" style="flex:1.4"><div class="bar"><i></i><i></i><i></i>&nbsp; 1838blackmetropolis.github.io/Eden-Cemetary</div><div class="photo"><img src="assets/hero-aerial.jpg" alt="Eden Cemetery website"></div></div>
+    <div class="col" style="display:flex;flex-direction:column;justify-content:center">
+      <div class="chips" style="margin-bottom:26px"><span class="chip">Home</span><span class="chip">History</span><span class="chip">Notable Residents</span><span class="chip">For Kids</span><span class="chip">Map &amp; Tours</span><span class="chip">Find a Lot</span><span class="chip">Friends of Eden</span><span class="chip">Contact</span></div>
+      <a class="btn" href="https://1838blackmetropolis.github.io/Eden-Cemetary/" target="_blank" rel="noopener" style="align-self:flex-start">Open the live site →</a>
     </div>
   </div>
 </section>
 
-<!-- 22 KEEPING IT RUNNING -->
-<section class="slide" data-sec="Section 3 · Recommendation">
-  <div class="eyebrow">Technical architecture · the recommendation</div>
-  <h2>Stop treating the website as the place where Eden happens.</h2>
-  <p class="sub">A powerful, immersive website that is low cost and low maintenance — and social interaction and events on existing free tools.</p>
+<!-- 22 TECHNICAL RECOMMENDATIONS -->
+<section class="slide" data-sec="Section 3 · Recommendations">
+  <div class="eyebrow">Technical architecture</div>
+  <h2>Technical Recommendations</h2>
+  <p class="sub">A powerful website that is low cost and low maintenance — and social interaction on existing free tools.</p>
   <div class="grid3" style="flex:0 0 auto">
-    <div class="card"><div class="tag">The website</div><h3>Self-contained, Eden owns it</h3><p>Interactive for visitors; no CMS to log into, nothing to patch, no subscription. Get off Squarespace. The only cost is hosting.</p></div>
-    <div class="card tint"><div class="tag">Facebook + Instagram</div><h3>The living room</h3><p>Events, news, conversation, and partnerships live on Facebook and cross-post to Instagram for free. Events feed the website automatically.</p></div>
-    <div class="card"><div class="tag">People</div><h3>One volunteer · 50 hours · Penn Praxis</h3><p>One social-media volunteer. 1838 handles small site changes this year through the contract's 50 hours. Penn Praxis students build on it next year.</p></div>
+    <div class="card"><div class="tag">The website</div><h3>Self-contained. Eden owns it.</h3><p>No CMS, no subscription. Get off Squarespace.</p></div>
+    <div class="card tint"><div class="tag">Facebook + Instagram</div><h3>The living room.</h3><p>Events and news live there — and feed the website.</p></div>
+    <div class="card"><div class="tag">People</div><h3>One volunteer · 50 hours · Penn Praxis</h3><p>Social volunteer now. 1838 this year. Students next year.</p></div>
   </div>
-  <div class="dark" style="margin-top:16px;display:flex;gap:30px;align-items:center;padding:16px 26px">
-    <div style="flex:1"><span class="label">What this costs Eden</span><p style="margin:0;font-size:16px">The annual web hosting fee Eden likely already pays. Everything else is free technology Eden's audience already uses.</p></div>
-    <div class="stat" style="color:var(--gold);font-size:40px">~$0<small style="color:var(--lavender)">new recurring cost</small></div>
+  <div class="dark" style="margin-top:18px;display:flex;gap:30px;align-items:center;padding:18px 28px">
+    <div style="flex:1"><span class="label">What this costs Eden</span><p style="margin:0;font-size:18px">The hosting fee Eden likely already pays.</p></div>
+    <div class="stat" style="color:var(--gold);font-size:44px">~$0<small style="color:var(--lavender)">new recurring cost</small></div>
   </div>
 </section>
 
@@ -517,21 +489,22 @@ td.who{font-family:var(--head);font-weight:700;color:var(--charcoal)}
 <section class="slide" data-sec="Next Steps">
   <div class="eyebrow">Next steps</div>
   <h2>October is yours.</h2>
-  <p class="sub">Read it, click through it, share it with your board — then tell us what to change.</p>
-  <div class="grid3" style="flex:0 0 auto">
-    <div class="card"><div class="tag">You receive today</div><ul><li>The full deliverable document (PDF + Word)</li><li>The live website and lot locator</li><li>The shared data folder</li><li>This walk-through</li></ul></div>
-    <div class="card tint"><div class="tag">We'd love your feedback on</div><ul><li>Does the narrative sound like Eden?</li><li>Anything missing or wrong in the history?</li><li>Notables, lots, and names to correct</li><li>Which partners to approach first</li></ul></div>
-    <div class="card"><div class="tag">November – December</div><ul><li>Fold in your feedback</li><li>Complete the tour StoryMap</li><li>Final documents and site handover</li><li>Plan the 90 days that follow</li></ul></div>
+  <div class="grid3" style="margin-top:10px">
+    <div class="card"><div class="tag">You receive today</div><ul><li>The full document (PDF + Word)</li><li>The live website</li><li>The data folder</li></ul></div>
+    <div class="card tint"><div class="tag">Tell us</div><ul><li>Does it sound like Eden?</li><li>What's missing or wrong?</li><li>Which partners first?</li></ul></div>
+    <div class="card"><div class="tag">November – December</div><ul><li>Your feedback folded in</li><li>Tour StoryMap complete</li><li>Final handover</li></ul></div>
   </div>
-  <div class="callout" style="margin-top:18px;padding:16px 24px"><span class="label">How to send feedback</span><p style="margin:0;font-size:16px">Comments in the Word document, notes by email, or a working session — whichever is easiest. We'll gather everything in one place and walk through it with you before we finalize.</p></div>
 </section>
 
-<!-- 24 THANK YOU -->
-<section class="slide divider title" data-sec="">
-  <img class="logo" src="assets/logo.jpg" alt="1838 Black Metropolis" style="margin-bottom:22px">
-  <h1 style="font-size:60px">Eden held them.<br>Eden holds us still.</h1>
-  <div class="rule" style="margin:14px auto 22px"></div>
-  <p class="sub" style="color:var(--lavender)">Thank you. — 1838 Black Metropolis · Reclaim. Rewrite. &amp; Restore.</p>
+<!-- 24 CLOSE -->
+<section class="slide bg" data-sec="">
+  <div class="bgimg" style="background-image:url(assets/william-still-portrait.jpg);background-position:center 20%;opacity:.45"></div><div class="shade"></div>
+  <div class="content center">
+    <img class="logo" src="assets/logo.jpg" alt="1838 Black Metropolis" style="margin-bottom:22px">
+    <h1 style="font-size:62px">Eden held them.<br>Eden holds us still.</h1>
+    <div class="rule" style="margin:14px auto 22px"></div>
+    <p class="sub">Thank you. — 1838 Black Metropolis · Reclaim. Rewrite. &amp; Restore.</p>
+  </div>
 </section>
 
   <div class="chrome"><span class="sec" id="secLabel"></span><span id="counter"></span></div>
@@ -552,12 +525,10 @@ td.who{font-family:var(--head);font-weight:700;color:var(--charcoal)}
     counter.textContent=(i+1)+' / '+slides.length;
     secLabel.textContent=slides[i].dataset.sec||'';
     progress.style.width=((i+1)/slides.length*100)+'%';
+    deck.classList.toggle('onbg',slides[i].classList.contains('bg'));
     history.replaceState(null,'','#'+(i+1));
   }
-  function fit(){
-    const s=Math.min(window.innerWidth/1280, window.innerHeight/720);
-    deck.style.transform='scale('+s+')';
-  }
+  function fit(){ deck.style.transform='scale('+Math.min(window.innerWidth/1280,window.innerHeight/720)+')'; }
   document.getElementById('next').onclick=()=>show(i+1);
   document.getElementById('prev').onclick=()=>show(i-1);
   document.addEventListener('keydown',e=>{
@@ -567,19 +538,10 @@ td.who{font-family:var(--head);font-weight:700;color:var(--charcoal)}
     else if(e.key.toLowerCase()==='f'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();}
     else if(e.key.toLowerCase()==='o'){document.body.classList.toggle('overview');}
   });
-  deck.addEventListener('click',e=>{ if(e.target.closest('a')) return; const r=deck.getBoundingClientRect(); (e.clientX-r.left)/r.width>0.5?show(i+1):show(i-1); });
+  deck.addEventListener('click',e=>{ if(e.target.closest('a')) return; if(document.body.classList.contains('overview')){const s=e.target.closest('.slide'); if(s){document.body.classList.remove('overview'); show(slides.indexOf(s));} return;} const r=deck.getBoundingClientRect(); (e.clientX-r.left)/r.width>0.5?show(i+1):show(i-1); });
   window.addEventListener('resize',fit); window.addEventListener('hashchange',()=>show((parseInt(location.hash.slice(1))||1)-1));
   fit(); show(i);
 })();
 </script>
-<style>
-/* overview mode (press O) */
-body.overview{overflow:auto}
-body.overview #stage{position:static;display:block;padding:30px}
-body.overview .deck{transform:none!important;width:auto;height:auto;background:none;box-shadow:none;display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-body.overview .slide{display:flex!important;position:relative;inset:auto;width:100%;aspect-ratio:16/9;height:auto;padding:22px 26px;zoom:.32;cursor:pointer;outline:2px solid rgba(255,255,255,.08)}
-body.overview .slide.active{outline:4px solid var(--gold)}
-body.overview .chrome,body.overview .progress{display:none}
-</style>
 </body>
 </html>
